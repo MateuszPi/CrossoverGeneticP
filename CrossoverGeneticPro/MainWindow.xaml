@@ -1,0 +1,14 @@
+﻿<Window x:Class="CrossoverGeneticPro.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CrossoverGeneticPro"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <TextBlock Name="Wynik" HorizontalAlignment="Left" Height="288" Margin="128,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="389" Background="#FFEE8F8F"><Run/><LineBreak/><Run/></TextBlock>
+        <Button Name="Licz" Content="Licz" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="128" Click="Licz_Click" Margin="0,31,0,0"/>
+
+    </Grid>
+</Window>
