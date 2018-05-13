@@ -35,6 +35,8 @@ namespace CrossoverGeneticPro
 
     public partial class MainWindow : Window
     {
+        int populationSize = 5000;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -43,11 +45,11 @@ namespace CrossoverGeneticPro
 
         private void Licz_Click(object sender, RoutedEventArgs e)
         {
-            //Wynik.Refresh();
             Wynik.Text = "Liczę...";
             Wynik.Refresh();
             var rand = new Random();
             List<City> listaMiast = new List<City>();
+            //int finalPopSize = populationSize;
 
             listaMiast.Add(new City(37, 79, "0"));
             listaMiast.Add(new City(-90, -44, "1"));
@@ -88,12 +90,9 @@ namespace CrossoverGeneticPro
 
             var mut = new Mutation();
 
-            int liczebnoscInt = 10000;
+            int finalPopulationSize = populationSize;
 
-            string metoda = Console.ReadLine();
-            int metodaInt = Convert.ToInt32(metoda);
-
-            mut.GenerateRandomPopulation(pop, listaMiast, liczebnoscInt);
+            mut.GenerateRandomPopulation(pop, listaMiast, populationSize);
             calc.CalculatePopulationDistances(pop);
             calc.OrderPopulation(pop);
             Stopwatch sw = new Stopwatch();
@@ -129,6 +128,13 @@ namespace CrossoverGeneticPro
             }
 
             bmp.Save("map.bmp");
+        }
+
+        private void PopulationSize_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string popSizeString = PopulationSize.Text;
+            populationSize = Convert.ToInt32(popSizeString);
+            Console.WriteLine(populationSize);
         }
     }
 }
