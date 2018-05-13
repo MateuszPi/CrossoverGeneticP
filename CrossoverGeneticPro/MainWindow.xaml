@@ -7,8 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <TextBlock Name="Wynik" HorizontalAlignment="Left" Height="288" Margin="128,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="389" Background="#FFEE8F8F"><Run/><LineBreak/><Run/></TextBlock>
+        <TextBlock Name="Wynik" HorizontalAlignment="Left" Height="288" Margin="128,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="389" Background="Black" Foreground="White"><Run/><LineBreak/><Run/></TextBlock>
         <Button Name="Licz" Content="Licz" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="128" Click="Licz_Click" Margin="0,31,0,0"/>
-
     </Grid>
 </Window>

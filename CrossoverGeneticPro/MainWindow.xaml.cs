@@ -38,11 +38,12 @@ namespace CrossoverGeneticPro
         public MainWindow()
         {
             InitializeComponent();
+            Wynik.Refresh();
         }
 
         private void Licz_Click(object sender, RoutedEventArgs e)
         {
-            Wynik.Refresh();
+            //Wynik.Refresh();
             Wynik.Text = "Liczę...";
             Wynik.Refresh();
             var rand = new Random();
