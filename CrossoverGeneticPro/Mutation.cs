@@ -150,8 +150,15 @@ namespace CrossoverGeneticPro
                         }
                     } while (childIndex < sizeOfRoad);
                     _calc.CalculateTotalDistance(child);
+                    if (licznikPoprawy > 10)
+                    {
+                        Road child2 = RandomMutationForCrossover(child);
+                        population.PopulationList.Add(child);
+                        Console.WriteLine("Random");
+                    }
                     population.PopulationList.Add(child);
                 }
+               
                 _calc.OrderPopulation(population);
                 decimal oldBest = bestRoad.TotalDistance;
 
@@ -164,7 +171,7 @@ namespace CrossoverGeneticPro
                 {
                     licznikPoprawy++;
                 }
-                //if (licznikPoprawy == 20)
+                //if (licznikPoprawy == 10)
                 //{
                 //    int licznikPoprawyB = 0;
                 //    while (licznikPoprawyB < 20)
