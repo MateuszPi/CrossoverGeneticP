@@ -102,7 +102,7 @@ namespace CrossoverGeneticPro
             int licznikPoprawy = 0;
             do
             {
-                decimal toKill1 = Convert.ToDecimal(sizeOfPopulation) * 0.35m;
+                decimal toKill1 = Convert.ToDecimal(sizeOfPopulation) * 0.5m;
                 decimal toKill2 = Convert.ToDecimal(sizeOfPopulation) - toKill1;
                 population.PopulationList.RemoveRange(Convert.ToInt32(toKill1), Convert.ToInt32(toKill2));
                 int z = 0;
@@ -150,12 +150,8 @@ namespace CrossoverGeneticPro
                         }
                     } while (childIndex < sizeOfRoad);
                     _calc.CalculateTotalDistance(child);
-                    if (licznikPoprawy > 10)
-                    {
-                        Road child2 = RandomMutationForCrossover(child);
-                        population.PopulationList.Add(child);
-                        Console.WriteLine("Random");
-                    }
+                    Road child2 = RandomMutationForCrossover(child);
+                    population.PopulationList.Add(child);
                     population.PopulationList.Add(child);
                 }
                
@@ -171,27 +167,6 @@ namespace CrossoverGeneticPro
                 {
                     licznikPoprawy++;
                 }
-                //if (licznikPoprawy == 10)
-                //{
-                //    int licznikPoprawyB = 0;
-                //    while (licznikPoprawyB < 20)
-                //    {
-                //        population.PopulationList.RemoveRange(Convert.ToInt16(toKill1), Convert.ToInt16(toKill2));
-                //        for (int i = 0; i < sizeOfPopulation; i++)
-                //        {
-                //            int rand = _rand.Next(0, population.PopulationList.Count);
-                //            population.PopulationList.Add(RandomMutationForCrossover(population.PopulationList[rand]));
-                //        }
-                //        _calc.OrderPopulation(population);
-                //        if (population.PopulationList[0].TotalDistance < bestRoad.TotalDistance)
-                //        {
-                //            bestRoad = population.PopulationList[0];
-                //            licznikPoprawyB = 20;
-                //            licznikPoprawy = 0;
-                //        }
-                //        licznikPoprawyB++;
-                //    }
-                //}
                 Iterations++;
                 Console.WriteLine($"Iteracja {Iterations}, current best: {bestRoad.TotalDistance}");
                 z++;

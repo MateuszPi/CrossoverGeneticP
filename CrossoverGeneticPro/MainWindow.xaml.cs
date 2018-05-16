@@ -45,7 +45,7 @@ namespace CrossoverGeneticPro
 
         private void Licz_Click(object sender, RoutedEventArgs e)
         {
-            Wynik.Text = "Liczę...";
+            Wynik.Text = "Liczę...\r\nMoże to potrwać do kilku minut.";
             Wynik.Refresh();
             var rand = new Random();
             List<City> listaMiast = new List<City>();
