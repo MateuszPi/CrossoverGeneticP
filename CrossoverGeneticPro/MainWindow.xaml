@@ -14,13 +14,15 @@
         <TextBlock Name="Wynik" Margin="17,31,0,0" TextWrapping="Wrap" Background="Black" Foreground="White" Grid.Column="1" Height="288" VerticalAlignment="Top" HorizontalAlignment="Left" Width="384"><Run/><LineBreak/><Run/></TextBlock>
         <Button Name="Licz" Content="Licz" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="128" Click="Licz_Click" Margin="0,288,0,0" Grid.ColumnSpan="2"/>
         <TextBlock HorizontalAlignment="Left" Height="31" Margin="0,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="128" Grid.ColumnSpan="2"><Run Text="Rozmiar populacji"/><LineBreak/><Run Text="(domyślnie "/><Run Text="50"/><Run Text="00):"/></TextBlock>
-        <TextBox Name="PopulationSize" HorizontalAlignment="Left" Height="31" Margin="0,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="128" TextChanged="PopulationSize_TextChanged" Grid.ColumnSpan="2"/>
+        <TextBox Name="PopulationSize" HorizontalAlignment="Left" Height="31" Margin="0,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="128" TextChanged="PopulationSize_TextChanged" Grid.ColumnSpan="2" PreviewTextInput="PopulationSiz_PreviewTextInput"/>
         <ComboBox Name="Methode" HorizontalAlignment="Left" Margin="0,124,0,0" VerticalAlignment="Top" Width="128" Height="30" Grid.ColumnSpan="2">
-        <ComboBoxItem Content="OX1"/>
-        <!--<ComboBoxItem Content="Y"/>-->
-        <!--<ComboBoxItem Content="Z"/>-->
+            <ComboBoxItem Content="OX1"/>
+            <!--<ComboBoxItem Content="Y"/>-->
+            <!--<ComboBoxItem Content="Z"/>-->
         </ComboBox>
         <TextBlock HorizontalAlignment="Left" Height="31" Margin="0,93,0,0" TextWrapping="Wrap" Text="Metoda" VerticalAlignment="Top" Width="128" Grid.ColumnSpan="2"/>
         <TextBlock HorizontalAlignment="Left" Height="31" TextWrapping="Wrap" Text="CrosoverGeneticP" VerticalAlignment="Top" Width="517" Grid.ColumnSpan="2" FontSize="24" TextAlignment="Center"/>
+        <Button Name="LoadCities" Content="Załaduj współrzędne&#xD;&#xA; miast z pliku" HorizontalAlignment="Left" Margin="0,154,0,0" VerticalAlignment="Top" Width="128" Grid.ColumnSpan="2" Height="39" Click="LoadCities_Click"/>
+        <TextBlock Name ="sss" HorizontalAlignment="Left" Height="35" Margin="10,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="106"/>
     </Grid>
 </Window>

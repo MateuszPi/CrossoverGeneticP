@@ -11,6 +11,7 @@ namespace CrossoverGeneticPro
         private readonly Random _rand = new Random();
         private Calculations _calc = new Calculations();
         public int Iterations { get; set; }
+        public int RandomMutations = 0;
         public void GenerateRandomPopulation(Population population, List<City> citiesList, int populationSize)
         {
             Road[] randomPopulation = new Road[populationSize];
@@ -76,6 +77,7 @@ namespace CrossoverGeneticPro
                 {
                     citiesArray[i] = Parent.CitiesList[i];
                 }
+                RandomMutations++;
             }
 
             List<City> listOfCitiesForChild = new List<City>();
@@ -111,8 +113,29 @@ namespace CrossoverGeneticPro
                     int newSizeOfPopulation = population.PopulationList.Count;
                     int parent1Index = _rand.Next(0, newSizeOfPopulation);
                     int parent2Index = _rand.Next(0, newSizeOfPopulation);
-                    Road parent1 = population.PopulationList[parent1Index];
-                    Road parent2 = population.PopulationList[parent2Index];
+                    Road parent1;
+                    Road parent2;
+                    if (licznikPoprawy > 10)
+                    {
+                        parent1 = RandomMutationForCrossover(population.PopulationList[parent1Index]);
+                        _calc.CalculateTotalDistance(parent1);
+                        parent2 = RandomMutationForCrossover(population.PopulationList[parent2Index]);
+                        _calc.CalculateTotalDistance(parent2);
+
+                        if (parent1.TotalDistance < parent2.TotalDistance)
+                        {
+                            population.PopulationList.Add(parent1);
+                        }
+                        else
+                        {
+                            population.PopulationList.Add(parent2);
+                        }
+                    }
+                    else
+                    {
+                        parent1 = population.PopulationList[parent1Index];
+                       parent2 = population.PopulationList[parent2Index];
+                    }
                     int sizeOfRoad = population.PopulationList[0].CitiesList.Count;
                     Road child = new Road();
                     City nullCity = new City(0, 0, "N");
@@ -170,7 +193,8 @@ namespace CrossoverGeneticPro
                 Iterations++;
                 Console.WriteLine($"Iteracja {Iterations}, current best: {bestRoad.TotalDistance}");
                 z++;
-            } while (licznikPoprawy <= 21);
+            } while (licznikPoprawy <= 31);
+            Console.WriteLine(RandomMutations);
         }
     }
 }

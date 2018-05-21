@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -36,46 +37,57 @@ namespace CrossoverGeneticPro
     public partial class MainWindow : Window
     {
         int populationSize = 5000;
+        List<City> listaMiast = new List<City>();
+        bool CitiesLoaded = false;
 
         public MainWindow()
         {
             InitializeComponent();
             Wynik.Refresh();
+            PopulationSize.MaxLength = 10;
         }
 
         private void Licz_Click(object sender, RoutedEventArgs e)
         {
             Wynik.Text = "Liczę...\r\nMoże to potrwać do kilku minut.";
+            if (CitiesLoaded == false)
+            {
+                Wynik.Text = $"{Wynik.Text}\r\nZaładowano domyśly zestaw miast";
+            }
             Wynik.Refresh();
             var rand = new Random();
-            List<City> listaMiast = new List<City>();
             //int finalPopSize = populationSize;
 
-            listaMiast.Add(new City(37, 79, "0"));
-            listaMiast.Add(new City(-90, -44, "1"));
-            listaMiast.Add(new City(-89, 13, "2"));
-            listaMiast.Add(new City(38, -66, "3"));
-            listaMiast.Add(new City(36, -100, "4"));
-            listaMiast.Add(new City(38, 41, "5"));
-            listaMiast.Add(new City(-31, 74, "6"));
-            listaMiast.Add(new City(61, 20, "7"));
-            listaMiast.Add(new City(-29, 39, "8"));
-            listaMiast.Add(new City(71, -85, "9"));
-            listaMiast.Add(new City(12, -2, "10"));
-            listaMiast.Add(new City(-41, 17, "11"));
-            listaMiast.Add(new City(17, -36, "12"));
-            listaMiast.Add(new City(91, -66, "13"));
-            listaMiast.Add(new City(71, -70, "14"));
-            listaMiast.Add(new City(74, -21, "15"));
-            listaMiast.Add(new City(16, -74, "16"));
-            listaMiast.Add(new City(-56, -67, "17"));
-            listaMiast.Add(new City(63, 15, "18"));
-            listaMiast.Add(new City(-55, 26, "19"));
-            listaMiast.Add(new City(-38, 26, "20"));
-            listaMiast.Add(new City(8, 59, "21"));
-            listaMiast.Add(new City(91, -86, "22"));
-            listaMiast.Add(new City(-99, -12, "23"));
-            listaMiast.Add(new City(-96, -58, "24"));
+            if (CitiesLoaded == false)
+            {
+                listaMiast.Add(new City(37, 79, "0"));
+                listaMiast.Add(new City(-90, -44, "1"));
+                listaMiast.Add(new City(-89, 13, "2"));
+                listaMiast.Add(new City(38, -66, "3"));
+                listaMiast.Add(new City(36, -100, "4"));
+                listaMiast.Add(new City(38, 41, "5"));
+                listaMiast.Add(new City(-31, 74, "6"));
+                listaMiast.Add(new City(61, 20, "7"));
+                listaMiast.Add(new City(-29, 39, "8"));
+                listaMiast.Add(new City(71, -85, "9"));
+                listaMiast.Add(new City(12, -2, "10"));
+                listaMiast.Add(new City(-41, 17, "11"));
+                listaMiast.Add(new City(17, -36, "12"));
+                listaMiast.Add(new City(91, -66, "13"));
+                listaMiast.Add(new City(71, -70, "14"));
+                listaMiast.Add(new City(74, -21, "15"));
+                listaMiast.Add(new City(16, -74, "16"));
+                listaMiast.Add(new City(-56, -67, "17"));
+                listaMiast.Add(new City(63, 15, "18"));
+                listaMiast.Add(new City(-55, 26, "19"));
+                listaMiast.Add(new City(-38, 26, "20"));
+                listaMiast.Add(new City(8, 59, "21"));
+                listaMiast.Add(new City(91, -86, "22"));
+                listaMiast.Add(new City(-99, -12, "23"));
+                listaMiast.Add(new City(-96, -58, "24"));
+            }
+
+
 
 
             foreach (var item in listaMiast)
@@ -132,9 +144,38 @@ namespace CrossoverGeneticPro
 
         private void PopulationSize_TextChanged(object sender, TextChangedEventArgs e)
         {
+            if (PopulationSize.Text.Length == 0)
+            {
+                populationSize = 5000;
+                return;
+            }
             string popSizeString = PopulationSize.Text;
             populationSize = Convert.ToInt32(popSizeString);
             Console.WriteLine(populationSize);
+
+        }
+
+        private void PopulationSiz_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"[0-9]");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void LoadCities_Click(object sender, RoutedEventArgs e)
+        {
+            Loader load = new Loader();
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".txt";
+            dlg.Filter = "TXT Files (*.txt)|*.txt";
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+            {
+                string filename = dlg.FileName;
+                sss.Text = filename;
+                listaMiast =  load.ReadCitiesLocationFromFile(filename);
+                CitiesLoaded = true;
+            }
+
         }
     }
 }
