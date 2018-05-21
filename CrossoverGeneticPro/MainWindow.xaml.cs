@@ -39,12 +39,14 @@ namespace CrossoverGeneticPro
         int populationSize = 5000;
         List<City> listaMiast = new List<City>();
         bool CitiesLoaded = false;
+        string Met;
 
         public MainWindow()
         {
             InitializeComponent();
             Wynik.Refresh();
             PopulationSize.MaxLength = 10;
+            Met = Methode.Text;
         }
 
         private void Licz_Click(object sender, RoutedEventArgs e)
@@ -56,6 +58,8 @@ namespace CrossoverGeneticPro
             }
             Wynik.Refresh();
             var rand = new Random();
+            Met = Methode.Text;
+            Console.WriteLine(Met);
             //int finalPopSize = populationSize;
 
             if (CitiesLoaded == false)
@@ -108,9 +112,27 @@ namespace CrossoverGeneticPro
             calc.CalculatePopulationDistances(pop);
             calc.OrderPopulation(pop);
             Stopwatch sw = new Stopwatch();
-            sw.Start();
-            mut.MutateOX1(pop);
-            sw.Stop();
+
+            if (Met == "OX1")
+            {
+                sw.Start();
+                mut.MutatePMX(pop);
+                sw.Stop();
+            }
+            else if (Met == "ERO")
+            {
+                sw.Start();
+                mut.MutateERO(pop, listaMiast);
+                sw.Stop();
+            }
+            else if (Met == "CCO")
+            {
+                sw.Start();
+                mut.MutateERO(pop, listaMiast);
+                sw.Stop();
+            }
+
+
 
             string wynik = $"Liczba iteracji: {mut.Iterations} w czasie {sw.Elapsed}\r\n" +
                 $"Optymalny Wynik: {pop.PopulationList[0].TotalDistance}\r\n";
@@ -175,6 +197,16 @@ namespace CrossoverGeneticPro
                 listaMiast =  load.ReadCitiesLocationFromFile(filename);
                 CitiesLoaded = true;
             }
+
+        }
+
+        private void Methode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }

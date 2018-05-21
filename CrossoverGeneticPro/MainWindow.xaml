@@ -15,14 +15,16 @@
         <Button Name="Licz" Content="Licz" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="128" Click="Licz_Click" Margin="0,288,0,0" Grid.ColumnSpan="2"/>
         <TextBlock HorizontalAlignment="Left" Height="31" Margin="0,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="128" Grid.ColumnSpan="2"><Run Text="Rozmiar populacji"/><LineBreak/><Run Text="(domyślnie "/><Run Text="50"/><Run Text="00):"/></TextBlock>
         <TextBox Name="PopulationSize" HorizontalAlignment="Left" Height="31" Margin="0,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="128" TextChanged="PopulationSize_TextChanged" Grid.ColumnSpan="2" PreviewTextInput="PopulationSiz_PreviewTextInput"/>
-        <ComboBox Name="Methode" HorizontalAlignment="Left" Margin="0,124,0,0" VerticalAlignment="Top" Width="128" Height="30" Grid.ColumnSpan="2">
-            <ComboBoxItem Content="OX1"/>
-            <!--<ComboBoxItem Content="Y"/>-->
-            <!--<ComboBoxItem Content="Z"/>-->
+        <ComboBox Name="Methode" HorizontalAlignment="Left" Margin="0,124,0,0" VerticalAlignment="Top" Width="128" Height="30" Grid.ColumnSpan="2" SelectionChanged="Methode_SelectionChanged" SelectedIndex="0">
+            <ComboBoxItem>OX1</ComboBoxItem>
+            <ComboBoxItem>ERO</ComboBoxItem>
+            <ComboBoxItem>CCO</ComboBoxItem>
         </ComboBox>
         <TextBlock HorizontalAlignment="Left" Height="31" Margin="0,93,0,0" TextWrapping="Wrap" Text="Metoda" VerticalAlignment="Top" Width="128" Grid.ColumnSpan="2"/>
         <TextBlock HorizontalAlignment="Left" Height="31" TextWrapping="Wrap" Text="CrosoverGeneticP" VerticalAlignment="Top" Width="517" Grid.ColumnSpan="2" FontSize="24" TextAlignment="Center"/>
         <Button Name="LoadCities" Content="Załaduj współrzędne&#xD;&#xA; miast z pliku" HorizontalAlignment="Left" Margin="0,154,0,0" VerticalAlignment="Top" Width="128" Grid.ColumnSpan="2" Height="39" Click="LoadCities_Click"/>
         <TextBlock Name ="sss" HorizontalAlignment="Left" Height="35" Margin="10,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="106"/>
+        <Button Content="Instrukcja" HorizontalAlignment="Left" Margin="0,193,0,0" VerticalAlignment="Top" Width="128" Grid.ColumnSpan="2" Height="31" Click="Button_Click"/>
+        <TextBlock HorizontalAlignment="Left" Height="31" Margin="5,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="128" Grid.ColumnSpan="2" Text="CCO w trakcie prac"/>
     </Grid>
 </Window>
