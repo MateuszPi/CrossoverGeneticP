@@ -116,7 +116,7 @@ namespace CrossoverGeneticPro
             if (Met == "OX1")
             {
                 sw.Start();
-                mut.MutatePMX(pop);
+                mut.MutateOX1(pop, listaMiast);
                 sw.Stop();
             }
             else if (Met == "ERO")
@@ -128,7 +128,7 @@ namespace CrossoverGeneticPro
             else if (Met == "CCO")
             {
                 sw.Start();
-                mut.MutateERO(pop, listaMiast);
+                mut.MutateCCO(pop);
                 sw.Stop();
             }
 
@@ -145,8 +145,8 @@ namespace CrossoverGeneticPro
 
             Console.WriteLine(wynik);
 
-            Bitmap bmp = new Bitmap(200, 200);
-            System.Drawing.Pen blackPen = new System.Drawing.Pen(System.Drawing.Color.Black, 3);
+            Bitmap bmp = new Bitmap(10000, 10000);
+            System.Drawing.Pen blackPen = new System.Drawing.Pen(System.Drawing.Color.Black, 30);
 
             for (int i = 0; i < 24; i++)
             {
