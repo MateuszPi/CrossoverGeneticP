@@ -527,7 +527,7 @@ namespace CrossoverGeneticPro
                         //}
 
                         //var res = parent1.CitiesList.Where(x => x.CityName == sp2).Select((x, w) => w).ToArray();
-
+                        //test
 
                         if (sp1 == startCity)
                         {

@@ -131,8 +131,7 @@ namespace CrossoverGeneticPro
                 mut.MutateCCO(pop);
                 sw.Stop();
             }
-
-
+            //test
 
             string wynik = $"Liczba iteracji: {mut.Iterations} w czasie {sw.Elapsed}\r\n" +
                 $"Optymalny Wynik: {pop.PopulationList[0].TotalDistance}\r\n";
