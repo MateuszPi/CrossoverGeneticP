@@ -27,6 +27,7 @@ namespace CrossoverGeneticPro
         public int Iterations { get; set; }
         public int RandomMutations = 0;
         public int RandomMutations2 = 0;
+        public int mutatePopulationIterator = 0;
 
         public void GenerateRandomPopulation(Population population, List<City> citiesList, int populationSize)
         {
@@ -69,6 +70,15 @@ namespace CrossoverGeneticPro
                 size--;
             }
 
+            var q = newCityList.Distinct().ToList();
+            Road a = new Road();
+
+            if (q.Count != citiesList.Count)
+            {
+                Console.WriteLine("ERROR");
+                return GenerateRandomPopulationMember(citiesList);
+            }
+
             road.CitiesList = newCityList;
             return road;
         }
@@ -104,41 +114,22 @@ namespace CrossoverGeneticPro
             return child;
         }
 
-        public void mutatePopulation(Population population)
+        public Population mutatePopulation(Road Parent, int populationSize)
         {
-            int popsize = population.PopulationList.Count;
-            for (int i = 0; i < popsize; i++)
+            List<City> citiesList = Parent.CitiesList;
+            Population population = new Population();
+
+            Road[] randomPopulation = new Road[populationSize];
+
+            List<Road> randomPopulationList = new List<Road>();
+
+            for (int i = 0; i < populationSize; i++)
             {
-                Road parent = population.PopulationList[i];
-                Road child = new Road();
-                City nullCity = new City(0, 0, "N");
-                List<City> nullCityList = new List<City>();
-                for (int j = 0; j < parent.CitiesList.Count; j++)
-                {
-                    nullCityList.Add(nullCity);
-                }
-                child.CitiesList = nullCityList;
-                int rand1 = _rand.Next(0, parent.CitiesList.Count);
-                int rand2 = _rand.Next(0, parent.CitiesList.Count);
-                for (int j = 0; j < parent.CitiesList.Count; j++)
-                {
-                    if (j == rand1)
-                    {
-                        child.CitiesList[j] = parent.CitiesList[rand2];
-                    }
-                    else if (j == rand2)
-                    {
-                        child.CitiesList[j] = parent.CitiesList[rand1];
-                    }
-                    else
-                    {
-                        child.CitiesList[j] = parent.CitiesList[j];
-                    }
-                }
-                _calc.CalculateTotalDistance(child);
-                population.PopulationList.Add(child);
-                RandomMutations++;
+                randomPopulationList.Add(GenerateRandomPopulationMember(citiesList));
             }
+            population.PopulationList = randomPopulationList;
+            _calc.CalculatePopulationDistances(population);
+            return population;
         }
 
 
@@ -150,9 +141,18 @@ namespace CrossoverGeneticPro
             int licznikPoprawy = 0;
             do
             {
-                decimal toKill1 = Convert.ToDecimal(sizeOfPopulation) * 0.7m;
+                decimal toKill1 = Convert.ToDecimal(sizeOfPopulation) * 0.5m;
                 decimal toKill2 = Convert.ToDecimal(sizeOfPopulation) - toKill1;
                 population.PopulationList.RemoveRange(Convert.ToInt32(toKill1), Convert.ToInt32(toKill2));
+                if (licznikPoprawy > 15)
+                {
+                    Population newPopulation = mutatePopulation(population.PopulationList[0], Convert.ToInt32(population.PopulationList.Count/2));
+                    for (int i = 0; i < newPopulation.PopulationList.Count ; i++)
+                    {
+                        population.PopulationList.Add(newPopulation.PopulationList[i]);
+                        RandomMutations2++;
+                    }
+                }
                 int z = 0;
                 for (int i = population.PopulationList.Count; i < sizeOfPopulation; i++)
                 {
@@ -226,7 +226,7 @@ namespace CrossoverGeneticPro
                 Console.WriteLine($"Iteracja {Iterations}, current best: {bestRoad.TotalDistance}");
                 z++;
             } while (licznikPoprawy <= 31);
-            Console.WriteLine(RandomMutations);
+            Console.WriteLine(RandomMutations2);
         }
 
         private List<NeighborList> generateNeighborLists(List<NeighborList> NLL, string[] parent1, string[] parent2)
@@ -462,6 +462,25 @@ namespace CrossoverGeneticPro
             _calc.OrderPopulation(population);
             int sizeOfPopulation = population.PopulationList.Count;
             Road bestRoad = population.PopulationList[0];
+
+            for (int i = 0; i < sizeOfPopulation; i++)
+            {
+                string[] test = new string[population.PopulationList[0].CitiesList.Count];
+                for (int j = 0; j < population.PopulationList[0].CitiesList.Count; j++)
+                {
+                    bool a = false;
+                    for (int k = 0; k < population.PopulationList[0].CitiesList.Count; k++)
+                    {
+                        if (population.PopulationList[i].CitiesList[j].CityName == test[k])
+                        {
+                            Console.WriteLine("Błąd populacji");
+                            return;
+                        }
+                    }
+                    test[j] = population.PopulationList[i].CitiesList[j].CityName;
+                }
+            }
+
             int licznikPoprawy = 0;
             do
             {
@@ -491,7 +510,6 @@ namespace CrossoverGeneticPro
                     child1.CitiesList = nullCityList;
                     child2.CitiesList = nullCityList;
 
-                    //int indexStart = _rand.Next(0, sizeOfRoad);
                     int indexStart = 0;
 
 
@@ -516,25 +534,23 @@ namespace CrossoverGeneticPro
                     {
                         CitiesL2.Add(ip1);
                         string sp2 = parent2.CitiesList[ip1].CityName;
-                        //for (int j = 0; j < sizeOfRoad; j++)
-                        //{
-                        //    if (parent1.CitiesList[j].CityName == sp2)
-                        //    {
-                        //        sp1 = parent2.CitiesList[j].CityName;
-                        //        CitiesL1.Add(j);
-                        //        ip1 = j;
-                        //    }
-                        //}
+                        int res = 0;
 
-                        //var res = parent1.CitiesList.Where(x => x.CityName == sp2).Select((x, w) => w).ToArray();
-                        //test
+                        res = parent1.CitiesList.Select((city, index) => new { city, index }).First(x => x.city.CityName == sp2).index;
 
+                        ip1 = res;
+                        if (CitiesL1.Contains(ip1))
+                        {
+                            backAtStart = true;
+                            continue;
+                        }
+                        sp1 = parent2.CitiesList[res].CityName;
                         if (sp1 == startCity)
                         {
                             backAtStart = true;
                             continue;
                         }
-
+                        CitiesL1.Add(res);
                     }
 
                     for (int j = 0; j < CitiesL1.Count; j++)

@@ -145,7 +145,7 @@ namespace CrossoverGeneticPro
             Console.WriteLine(wynik);
 
             Bitmap bmp = new Bitmap(10000, 10000);
-            System.Drawing.Pen blackPen = new System.Drawing.Pen(System.Drawing.Color.Black, 30);
+            System.Drawing.Pen blackPen = new System.Drawing.Pen(System.Drawing.Color.Red, 30);
 
             for (int i = 0; i < 24; i++)
             {
