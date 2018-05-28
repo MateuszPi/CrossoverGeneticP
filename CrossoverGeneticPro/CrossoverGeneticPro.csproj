@@ -59,6 +59,8 @@
     <Compile Include="Loader.cs" />
     <Compile Include="Mutation.cs" />
     <Compile Include="Population.cs" />
+    <Compile Include="PropertyCopy.cs" />
+    <Compile Include="Reflection.cs" />
     <Compile Include="Road.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

@@ -70,14 +70,20 @@ namespace CrossoverGeneticPro
                 size--;
             }
 
-            var q = newCityList.Distinct().ToList();
-            Road a = new Road();
+            //bool test2 = newCityList.Distinct().Count() == citiesIndexTable.Count();
+            //if (test2 == false)
+            //{
+            //    Console.WriteLine("Błąd generatora populacji");
+            //    Console.Read();
+            //}
 
-            if (q.Count != citiesList.Count)
+            bool test = randomIndexTable.Distinct().Count() == citiesIndexTable.Count();
+            if (test == false)
             {
-                Console.WriteLine("ERROR");
-                return GenerateRandomPopulationMember(citiesList);
+                Console.WriteLine("Błąd generatora populacji");
+                Console.Read();
             }
+
 
             road.CitiesList = newCityList;
             return road;
@@ -139,6 +145,7 @@ namespace CrossoverGeneticPro
             int sizeOfPopulation = population.PopulationList.Count;
             Road bestRoad = population.PopulationList[0];
             int licznikPoprawy = 0;
+            int iterations = 0;
             do
             {
                 decimal toKill1 = Convert.ToDecimal(sizeOfPopulation) * 0.5m;
@@ -209,6 +216,7 @@ namespace CrossoverGeneticPro
                         population.PopulationList.Add(child2);
                     }
                 }
+                iterations++;
 
                 _calc.OrderPopulation(population);
                 decimal oldBest = bestRoad.TotalDistance;
@@ -297,7 +305,6 @@ namespace CrossoverGeneticPro
                 NLList.Add(new NeighborList(citiesList[i].CityName, 0));
             }
 
-            bool poprawiono = false;
 
             do
             {
@@ -510,12 +517,13 @@ namespace CrossoverGeneticPro
                     child1.CitiesList = nullCityList;
                     child2.CitiesList = nullCityList;
 
-                    int indexStart = 0;
+                    int indexStart = _rand.Next(0,sizeOfRoad);
 
 
                     bool backAtStart = false;
                     List<int> CitiesL1 = new List<int>();
                     List<int> CitiesL2 = new List<int>();
+                    string startCity = parent1.CitiesList[indexStart].CityName;
                     string[] toDebugL1 = new string[parent1.CitiesList.Count];
                     string[] toDebugL2 = new string[parent1.CitiesList.Count];
                     for (int k = 0; k < parent1.CitiesList.Count; k++)
@@ -523,7 +531,18 @@ namespace CrossoverGeneticPro
                         toDebugL1[k] = parent1.CitiesList[k].CityName;
                         toDebugL2[k] = parent2.CitiesList[k].CityName;
                     }
-                    string startCity = parent1.CitiesList[indexStart].CityName;
+                    bool test = toDebugL1.Distinct().Count() == toDebugL1.Count();
+                    if (test == false)
+                    {
+                        Console.WriteLine("Błąd generatora populacji");
+                        Console.Read();
+                    }
+                    bool test2 = toDebugL1.Distinct().Count() == toDebugL1.Count();
+                    if (test2 == false)
+                    {
+                        Console.WriteLine("Błąd generatora populacji");
+                        Console.Read();
+                    }
                     int ip1 = indexStart;
                     string sp1 = startCity;
                     CitiesL1.Add(indexStart);
@@ -532,45 +551,62 @@ namespace CrossoverGeneticPro
 
                     while (backAtStart == false)
                     {
-                        CitiesL2.Add(ip1);
                         string sp2 = parent2.CitiesList[ip1].CityName;
                         int res = 0;
-
                         res = parent1.CitiesList.Select((city, index) => new { city, index }).First(x => x.city.CityName == sp2).index;
-
-                        ip1 = res;
-                        if (CitiesL1.Contains(ip1))
-                        {
-                            backAtStart = true;
-                            continue;
-                        }
-                        sp1 = parent2.CitiesList[res].CityName;
-                        if (sp1 == startCity)
-                        {
-                            backAtStart = true;
-                            continue;
-                        }
                         CitiesL1.Add(res);
+                        ip1 = res;
+                        if (ip1 == indexStart)
+                        {
+                            backAtStart = true;
+                            continue;
+                        }
                     }
+
+                    string[] toDebugL1B = new string[parent1.CitiesList.Count];
+                    string[] toDebugL2B = new string[parent1.CitiesList.Count];
 
                     for (int j = 0; j < CitiesL1.Count; j++)
                     {
                         child1.CitiesList[CitiesL1[j]] = parent1.CitiesList[CitiesL1[j]];
+                        toDebugL1B[CitiesL1[j]] = parent1.CitiesList[CitiesL1[j]].CityName;
                     }
                     for (int j = 0; j < CitiesL1.Count; j++)
                     {
-                        child2.CitiesList[CitiesL2[j]] = parent1.CitiesList[CitiesL2[j]];
+                        child2.CitiesList[CitiesL1[j]] = parent1.CitiesList[CitiesL1[j]];
+                        toDebugL2B[CitiesL1[j]] = parent1.CitiesList[CitiesL1[j]].CityName;
                     }
                     for (int j = 0; j < sizeOfRoad; j++)
                     {
                         if (child1.CitiesList[j].CityName == "N")
                         {
                             child1.CitiesList[j] = parent2.CitiesList[j];
+                            toDebugL1B[j] = parent2.CitiesList[j].CityName;
                         }
                         if (child2.CitiesList[j].CityName == "N")
                         {
                             child2.CitiesList[j] = parent1.CitiesList[j];
+                            toDebugL2B[j] = parent1.CitiesList[j].CityName;
                         }
+                    }
+                    string[] toDebugL1C = new string[parent1.CitiesList.Count];
+                    string[] toDebugL2C = new string[parent1.CitiesList.Count];
+                    for (int k = 0; k < parent1.CitiesList.Count; k++)
+                    {
+                        toDebugL1C[k] = child1.CitiesList[k].CityName;
+                        toDebugL2C[k] = child2.CitiesList[k].CityName;
+                    }
+                    bool testC = toDebugL1C.Distinct().Count() == toDebugL1C.Count();
+                    if (testC == false)
+                    {
+                        Console.WriteLine("Błąd generatora populacji");
+                        Console.Read();
+                    }
+                    bool test2C = toDebugL1C.Distinct().Count() == toDebugL1C.Count();
+                    if (testC == false)
+                    {
+                        Console.WriteLine("Błąd generatora populacji");
+                        Console.Read();
                     }
                     _calc.CalculateTotalDistance(child1);
                     _calc.CalculateTotalDistance(child2);
