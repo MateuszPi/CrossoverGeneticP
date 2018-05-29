@@ -18,14 +18,12 @@
         <ComboBox Name="Methode" HorizontalAlignment="Left" Margin="0,124,0,0" VerticalAlignment="Top" Width="128" Height="30" Grid.ColumnSpan="2" SelectionChanged="Methode_SelectionChanged" SelectedIndex="0">
             <ComboBoxItem>OX1</ComboBoxItem>
             <ComboBoxItem>ERO</ComboBoxItem>
-            <ComboBoxItem>CCO</ComboBoxItem>
+            <ComboBoxItem>CX</ComboBoxItem>
         </ComboBox>
         <TextBlock HorizontalAlignment="Left" Height="31" Margin="0,93,0,0" TextWrapping="Wrap" Text="Metoda" VerticalAlignment="Top" Width="128" Grid.ColumnSpan="2"/>
-        <TextBlock HorizontalAlignment="Left" Height="31" TextWrapping="Wrap" Text="CrosoverGeneticP" VerticalAlignment="Top" Width="517" Grid.ColumnSpan="2" FontSize="24" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Height="31" TextWrapping="Wrap" VerticalAlignment="Top" Width="517" Grid.ColumnSpan="2" FontSize="24" TextAlignment="Center"><Run Text="Cros"/><Run Text="s"/><Run Text="overGeneticP"/></TextBlock>
         <Button Name="LoadCities" Content="Załaduj współrzędne&#xD;&#xA; miast z pliku" HorizontalAlignment="Left" Margin="0,154,0,0" VerticalAlignment="Top" Width="128" Grid.ColumnSpan="2" Height="39" Click="LoadCities_Click"/>
-        <TextBlock Name ="sss" HorizontalAlignment="Left" Height="35" Margin="10,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="106"/>
-        <Button Content="Instrukcja" HorizontalAlignment="Left" Margin="0,193,0,0" VerticalAlignment="Top" Width="128" Grid.ColumnSpan="2" Height="31" Click="Button_Click"/>
-        <TextBlock HorizontalAlignment="Left" Height="31" Margin="5,224,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="128" Grid.ColumnSpan="2" Text="CCO w trakcie prac"/>
+        <Button Content="Instrukcja" HorizontalAlignment="Left" Margin="0,193,0,0" VerticalAlignment="Top" Width="128" Grid.ColumnSpan="2" Height="31" Click="Instrukcja_Click"/>
         <CheckBox Name="Cykl" Content="Czy cykl zamkniety?" HorizontalAlignment="Left" Margin="0,250,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="133" Checked="CheckBox_Checked"/>
     </Grid>
 </Window>

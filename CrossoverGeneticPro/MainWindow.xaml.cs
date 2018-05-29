@@ -216,10 +216,15 @@ namespace CrossoverGeneticPro
             if (result == true)
             {
                 string filename = dlg.FileName;
-                sss.Text = filename;
-                listaMiast =  load.ReadCitiesLocationFromFile(filename);
+                listaMiast = load.ReadCitiesLocationFromFile(filename);
                 CitiesLoaded = true;
             }
+
+        }
+
+        private void Instrukcja_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("InstrukcjaObsługiCrossoverGeneticP.pdf");
 
         }
 
@@ -228,14 +233,11 @@ namespace CrossoverGeneticPro
             
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
 
         }
+
+
     }
 }
