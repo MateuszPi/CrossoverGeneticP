@@ -15,17 +15,34 @@ namespace CrossoverGeneticPro
             decimal result = (decimal)Math.Sqrt((double)distanceX + (double)distanceY);
             return result;
         }
-        public void CalculateTotalDistance(Road track)
+        public void CalculateTotalDistance(Road track, bool cykl)
         {
-            for (int i = 0; i < track.CitiesList.Count - 1; i++)
+            for (int i = 0; i < track.CitiesList.Count; i++)
             {
-                City cityA = track.CitiesList[i];
-                City cityB = track.CitiesList[i + 1];
-                if (cityA == cityB)
+                int x = 0;
+                if (i == track.CitiesList.Count - 1)
                 {
-                    track.TotalDistance = 99999999999.0m;
-                    return;
+                    if (cykl != true)
+                    {
+                        x = i;
+                    }
+                    if (cykl == true)
+                    {
+                        x = 0;
+                    }
                 }
+                else
+                {
+                    x = i + 1;
+                }
+
+                City cityA = track.CitiesList[i];
+                City cityB = track.CitiesList[x];
+                //if (cityA == cityB)
+                //{
+                //    track.TotalDistance = 99999999999.0m;
+                //    return;
+                //}
                 var res = CalculateDistances(cityA, cityB);
                 track.TotalDistance += res;
             }
@@ -36,12 +53,12 @@ namespace CrossoverGeneticPro
 
         //}
 
-        public void CalculatePopulationDistances(Population population)
+        public void CalculatePopulationDistances(Population population, bool cykl)
         {
             var popSize = population.PopulationList.Count;
             for (int i = 0; i < popSize; i++)
             {
-                CalculateTotalDistance(population.PopulationList[i]);
+                CalculateTotalDistance(population.PopulationList[i] , cykl);
             }
         }
         public void OrderPopulation(Population population)

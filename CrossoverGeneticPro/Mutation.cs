@@ -28,6 +28,12 @@ namespace CrossoverGeneticPro
         public int RandomMutations = 0;
         public int RandomMutations2 = 0;
         public int mutatePopulationIterator = 0;
+        bool cykl { get; set; }
+
+        public Mutation(bool cykl)
+        {
+            this.cykl = cykl;
+        }
 
         public void GenerateRandomPopulation(Population population, List<City> citiesList, int populationSize)
         {
@@ -70,13 +76,6 @@ namespace CrossoverGeneticPro
                 size--;
             }
 
-            //bool test2 = newCityList.Distinct().Count() == citiesIndexTable.Count();
-            //if (test2 == false)
-            //{
-            //    Console.WriteLine("Błąd generatora populacji");
-            //    Console.Read();
-            //}
-
             bool test = randomIndexTable.Distinct().Count() == citiesIndexTable.Count();
             if (test == false)
             {
@@ -116,7 +115,7 @@ namespace CrossoverGeneticPro
                     child.CitiesList[j] = Parent.CitiesList[j];
                 }
             }
-            _calc.CalculateTotalDistance(child);
+            _calc.CalculateTotalDistance(child, cykl);
             return child;
         }
 
@@ -134,7 +133,7 @@ namespace CrossoverGeneticPro
                 randomPopulationList.Add(GenerateRandomPopulationMember(citiesList));
             }
             population.PopulationList = randomPopulationList;
-            _calc.CalculatePopulationDistances(population);
+            _calc.CalculatePopulationDistances(population, cykl);
             return population;
         }
 
@@ -207,12 +206,12 @@ namespace CrossoverGeneticPro
                             parentIndex++;
                         }
                     } while (childIndex < sizeOfRoad);
-                    _calc.CalculateTotalDistance(child);
+                    _calc.CalculateTotalDistance(child, cykl);
                     population.PopulationList.Add(child);
                     if (licznikPoprawy > 15)
                     {
                         Road child2 = RandomMutationForCrossover(child);
-                        _calc.CalculateTotalDistance(child2);
+                        _calc.CalculateTotalDistance(child2, cykl);
                         population.PopulationList.Add(child2);
                     }
                 }
@@ -442,7 +441,7 @@ namespace CrossoverGeneticPro
                     {
                         child.CitiesList[j] = citiesTable[j];
                     }
-                    _calc.CalculateTotalDistance(child);
+                    _calc.CalculateTotalDistance(child, cykl);
                     population.PopulationList.Add(child);
                 }
                 decimal oldBest = bestRoad.TotalDistance;
@@ -608,8 +607,8 @@ namespace CrossoverGeneticPro
                         Console.WriteLine("Błąd generatora populacji");
                         Console.Read();
                     }
-                    _calc.CalculateTotalDistance(child1);
-                    _calc.CalculateTotalDistance(child2);
+                    _calc.CalculateTotalDistance(child1, cykl);
+                    _calc.CalculateTotalDistance(child2, cykl);
 
                     population.PopulationList.Add(child1);
                     population.PopulationList.Add(child2);

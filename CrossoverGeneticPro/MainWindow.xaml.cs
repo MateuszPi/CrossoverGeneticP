@@ -104,12 +104,21 @@ namespace CrossoverGeneticPro
 
             var pop = new Population();
 
-            var mut = new Mutation();
+            bool cykl = false;
+
+            if (Cykl.IsChecked == true)
+            {
+                cykl = true;
+            }
+            var mut = new Mutation(cykl);
+
+
+            
 
             int finalPopulationSize = populationSize;
 
             mut.GenerateRandomPopulation(pop, listaMiast, populationSize);
-            calc.CalculatePopulationDistances(pop);
+            calc.CalculatePopulationDistances(pop, cykl);
             calc.OrderPopulation(pop);
             Stopwatch sw = new Stopwatch();
 
@@ -144,10 +153,26 @@ namespace CrossoverGeneticPro
             Console.WriteLine(wynik);
 
             Bitmap bmp = new Bitmap(10000, 10000);
-            System.Drawing.Pen blackPen = new System.Drawing.Pen(System.Drawing.Color.Red, 30);
+            System.Drawing.Pen blackPen = new System.Drawing.Pen(System.Drawing.Color.Red, 10);
 
-            for (int i = 0; i < 24; i++)
+            for (int i = 0; i < pop.PopulationList[0].CitiesList.Count; i++)
             {
+                if (cykl == false && i == pop.PopulationList[0].CitiesList.Count-1)
+                {
+                    continue;
+                }
+                else if (cykl == true && i == pop.PopulationList[0].CitiesList.Count-1)
+                {
+                    int x1b = (int)pop.PopulationList[0].CitiesList[i].X + 100;
+                    int x2b = (int)pop.PopulationList[0].CitiesList[0].X + 100;
+                    int y1b = (int)pop.PopulationList[0].CitiesList[i].Y + 100;
+                    int y2b = (int)pop.PopulationList[0].CitiesList[0].Y + 100;
+                    using (var graphics = Graphics.FromImage(bmp))
+                    {
+                        graphics.DrawLine(blackPen, x1b, y1b, x2b, y2b);
+                    }
+                    continue;
+                }
                 int x1 = (int)pop.PopulationList[0].CitiesList[i].X + 100;
                 int x2 = (int)pop.PopulationList[0].CitiesList[i + 1].X + 100;
                 int y1 = (int)pop.PopulationList[0].CitiesList[i].Y + 100;
@@ -204,6 +229,11 @@ namespace CrossoverGeneticPro
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
 
         }
